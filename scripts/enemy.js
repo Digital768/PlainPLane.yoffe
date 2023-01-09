@@ -23,7 +23,7 @@ export default class Enemy {
         ctx.save()
         ctx.font = "10px Arial";
         ctx.strokeStyle = "red";
-        ctx.strokeText(this.health, this.x - 9  , this.y - this.radius - 3);
+        ctx.strokeText(this.health, this.x - 8  , this.y - this.radius - 3);
         ctx.restore();
     }
 
@@ -67,7 +67,7 @@ export default class Enemy {
     shoot() {
         const speed = 2;
         const delay = 54;
-        const damage = 0;
+        const damage = 1;
         const velocityX = -speed * Math.cos(this.angle);
         const velocityY = -speed * Math.sin(this.angle);
         const bulletX = this.x; // bullet's start postion

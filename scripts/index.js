@@ -49,6 +49,13 @@ function addEnemy(enemies, counter) {
 
 let count = 0;
 
+function drawPlayerHealth(health) {
+    ctx.save()
+    ctx.font = "40px Arial";
+    ctx.strokeStyle = "red";
+    ctx.strokeText(`Health: ${health}`, 30, 84);
+    ctx.restore();
+}
 function drawScore(score) {
     ctx.save()
     ctx.font = "40px Arial";
@@ -80,6 +87,21 @@ function gameLoop() {
         }
     });
 
+    enemies.forEach((enemy) => {
+        if (enemy.bulletController.collideWith(player)) {
+            if (player.health <= 0) {
+                let pauseImage = new Image()
+                pauseImage.src = '../pictures/you.died.png';
+                let scale = 400
+                clearInterval(interval);
+                setTimeout(()=> ctx.drawImage(pauseImage, (window.innerWidth - scale) / 2, (window.innerHeight - scale - 60) / 2, scale, scale), 500)
+                                
+            }
+        } else {
+            enemy.draw(ctx);
+        }
+    });
+
     addBombs(bombs, count);
     addEnemy(enemies, count)
     playerBulletController.draw(ctx);
@@ -91,12 +113,14 @@ function gameLoop() {
                 bombs.splice(index, 1);
                 bombExplosion.play();
                 score++;
+                player.health +=1;
             }
         } else {
             bomb.draw(ctx);
         }
     });
-    drawScore(score)
+    drawScore(score);
+    drawPlayerHealth(player.health);
     count++;
 }
 
@@ -104,7 +128,7 @@ function gameLoop() {
 let pauseSound = new Audio('../sounds/Continue.wav');
 let continueSound = new Audio('../sounds/Pause.wav');
 
-const keydown = (e) => {
+const keydownPause = (e) => {
     if (e.key === "p") {
         paused = !paused;
         if (paused) {
@@ -121,4 +145,20 @@ const keydown = (e) => {
         }
     }
 }
-canvas.addEventListener('keydown', keydown);
+canvas.addEventListener('keydown', keydownPause);
+
+//background music functionality
+const music = document.getElementById("music");
+let musicBool = false;
+const keydownMute = (e) => {
+    if (e.key === "m") {
+        if (!musicBool) {
+            music.play();
+            musicBool = !musicBool;
+        } else {
+            music.pause();
+            musicBool = !musicBool;
+        }
+    }
+}
+canvas.addEventListener('keydown', keydownMute);
