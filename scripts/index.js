@@ -14,28 +14,38 @@ let interval = setInterval(gameLoop, 1000 / 60);
 let paused = false;
 ctx.font = '50px Georgia';
 
-const bulletController = new BulletController(canvas);
+const playerBulletController = new BulletController(canvas);
 const player = new Player(
     "../pictures/player.plane.png",
     canvas.width / 2,
     canvas.height / 2,
-    bulletController
+    playerBulletController
 );
+
+let enemies = []
+
 const bombImage = "../pictures/bombSpriteYahels.png";
 
 const bombs = [new Bomb(bombImage, ...getRandomXY()), new Bomb(bombImage, ...getRandomXY()), new Bomb(bombImage, ...getRandomXY()),
 new Bomb(bombImage, ...getRandomXY()), new Bomb(bombImage, ...getRandomXY()), new Bomb(bombImage, ...getRandomXY())];
 
 function getRandomXY() {
-    return [(1920 - 12) * Math.random() + 12, (1024 - 12) * Math.random() + 12]
+    return [(1920 - 12) * Math.random() + 12, (920 - 12) * Math.random() + 12]
 }
 
 function addBombs(bombs, counter) {
-    console.log(13 + Math.floor(counter / 600))
     if (bombs.length < 13 + Math.floor(counter / 600) && bombs.length < 31) {
         bombs.push(new Bomb(bombImage, ...getRandomXY()))
     }
 }
+
+
+function addEnemy(enemies, counter) {
+    if (enemies.length < 1 + Math.floor(counter / 600) && enemies.length < 2) {
+      enemies.push(new Enemy("../pictures/Enemy.plane.png", ...getRandomXY(), new BulletController(canvas))) 
+    }
+}
+
 
 let count = 0;
 
@@ -50,17 +60,32 @@ function drawScore(score) {
 //enemy
 let bombExplosion = new Audio('../sounds/8bit_bomb_explosion.wav');
 
-const enemy = new Enemy(
-    "../pictures/Enemy.plane.png", canvas.width / 2, 90);
-
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     player.draw(ctx);
-    enemy.draw(ctx);
+    enemies.forEach(enemy => {
+        enemy.draw(ctx)
+        enemy.bulletController.draw(ctx)
+    })
+
+    enemies.forEach((enemy) => {
+        if (playerBulletController.collideWith(enemy)) {
+            if (enemy.health <= 0) {
+                const index = enemies.indexOf(enemy);
+                enemies.splice(index, 1);
+                score += 10;
+            }
+        } else {
+            enemy.draw(ctx);
+        }
+    });
+
     addBombs(bombs, count);
-    bulletController.draw(ctx);
+    addEnemy(enemies, count)
+    playerBulletController.draw(ctx);
+
     bombs.forEach((bomb) => {
-        if (bulletController.collideWith(bomb)) {
+        if (playerBulletController.collideWith(bomb)) {
             if (bomb.health <= 0) {
                 const index = bombs.indexOf(bomb);
                 bombs.splice(index, 1);

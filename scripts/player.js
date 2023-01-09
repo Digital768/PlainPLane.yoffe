@@ -5,13 +5,13 @@ export default class Player {
         this.x = x;
         this.y = y;
         this.bulletController = bulletController;
-        this.radius = 44;
+        this.radius = 40;
         this.angle = 0;
 
         this.spriteWidth = 1024;
         this.spriteHeight = 1024;
 
-        this.health = 5;
+        this.health = 20;
 
         this.playerImg = new Image()
         this.playerImg.src = playerImage;
@@ -52,13 +52,6 @@ export default class Player {
 
         // player hitbox
         ctx.save();
-        ctx.fillStyle = 'grey';
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fill()
-        ctx.closePath();
-        ctx.restore();
-        ctx.save();
         this.drawImage(ctx, this.playerImg, this.x, this.y, 0.1, this.angle);
         ctx.restore()
 
@@ -79,10 +72,10 @@ export default class Player {
         this.angle = theta;
 
         if (this.mouse.x != this.x) {
-            this.x -= dx / 80;
+            this.x -= dx / 40;
         }
         if (this.mouse.y != this.y) {
-            this.y -= dy / 80;
+            this.y -= dy / 40;
         }
     }
 

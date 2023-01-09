@@ -9,7 +9,7 @@ export default class Bullet {
         this.damage = damage;
         this.width = 5;
         this.height = 20;
-        this.color = 'orange';
+        this.color = 'brown';
 
         this.rightSideX = this.width * Math.cos(this.bulletAngle) + this.x;
         this.rightSideY = this.width * Math.sin(this.bulletAngle) + this.y;
