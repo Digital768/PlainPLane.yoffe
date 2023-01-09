@@ -138,10 +138,12 @@ const keydownPause = (e) => {
 
             let scale = 400
             clearInterval(interval)
+            music.pause();
             ctx.drawImage(pauseImage, (window.innerWidth - scale) / 2, (window.innerHeight - scale - 60) / 2, scale, scale)
         } else {
             continueSound.play();
             interval = setInterval(gameLoop, 1000 / 60);
+            music.play();
         }
     }
 }

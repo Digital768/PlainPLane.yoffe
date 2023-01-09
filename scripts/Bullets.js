@@ -30,7 +30,7 @@ export default class Bullet {
         ctx.fillStyle = this.color;
         ctx.fillRect(0, 0, this.width, this.height);
         ctx.fillStyle = this.color;
-        // ctx.roundRect(-2, -30, this.width, this.height, 5);
+        // ctx.roundRect(-2, -30, this.width, this.height, 5);                  // to make the bullet sless square
         ctx.restore();
     }
 
