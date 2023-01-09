@@ -42,7 +42,7 @@ function addBombs(bombs, counter) {
 
 function addEnemy(enemies, counter) {
     if (enemies.length < 1 + Math.floor(counter / 600) && enemies.length < 2) {
-      enemies.push(new Enemy("../pictures/Enemy.plane.png", ...getRandomXY(), new BulletController(canvas))) 
+        enemies.push(new Enemy("../pictures/Enemy.plane.png", ...getRandomXY(), new BulletController(canvas)))
     }
 }
 
@@ -100,7 +100,7 @@ function gameLoop() {
     count++;
 }
 
-
+// pause functionality 
 let pauseSound = new Audio('../sounds/Continue.wav');
 let continueSound = new Audio('../sounds/Pause.wav');
 
@@ -109,12 +109,16 @@ const keydown = (e) => {
         paused = !paused;
         if (paused) {
             pauseSound.play();
+            let pauseImage = new Image()
+            pauseImage.src = '../pictures/game-paused.png';
+
+            let scale = 400
             clearInterval(interval)
+            ctx.drawImage(pauseImage, (window.innerWidth - scale) / 2, (window.innerHeight - scale - 60) / 2, scale, scale)
         } else {
             continueSound.play();
             interval = setInterval(gameLoop, 1000 / 60);
         }
     }
 }
-
 canvas.addEventListener('keydown', keydown);

@@ -33,11 +33,6 @@ export default class Enemy {
         this.displayHealth(ctx);
 
         ctx.save();
-        ctx.fillStyle = 'grey';
-        ctx.beginPath();
-        ctx.arc(this.x - 2, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.closePath();
         ctx.restore();
         ctx.save();
         this.drawImage(ctx, this.enemyImage, this.x, this.y, 0.09, this.angle);
@@ -70,8 +65,8 @@ export default class Enemy {
     }
 
     shoot() {
-        const speed = 3;
-        const delay = 26;
+        const speed = 2;
+        const delay = 54;
         const damage = 0;
         const velocityX = -speed * Math.cos(this.angle);
         const velocityY = -speed * Math.sin(this.angle);

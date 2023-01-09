@@ -7,7 +7,7 @@ export default class Bomb {
         this.distance;
         this.health = 5;
         // this.hitBox = { x: this.x, y: this.y, radius: this.radius };
-        
+
         this.bombImg = new Image()
         this.bombImg.src = bombImage;
 
@@ -30,18 +30,17 @@ export default class Bomb {
     }
 
     
-    bombCollision(planeX, planeY, planeR, bombX, bombY, bombR) {
-        let a = planeR + bombR;
-        let x = planeX - bombX;
-        let y = planeY - bombY;
+    // bombCollision(planeX, planeY, planeR, bombX, bombY, bombR) {
+    //     let a = planeR + bombR;
+    //     let x = planeX - bombX;
+    //     let y = planeY - bombY;
 
-        if (a > Math.sqrt((x * x) + (y * y))) {
-            // return true;
-            console.log('boom!');
-            player.takeDamage(bombDamage)
-        } else {
-            return false;
-        }
-
-    }
+    //     if (a > Math.sqrt((x * x) + (y * y))) {
+    //         // return true;
+    //         console.log('boom!');
+    //         player.takeDamage(bombDamage)            //player.  ???
+    //     } else {
+    //         return false;
+    //     }
+    // }
 }
